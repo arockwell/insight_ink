@@ -26,6 +26,7 @@ type Note = {
 
 interface NoteCardProps {
   note: Note
+  // eslint-disable-next-line no-unused-vars
   onDelete?: (id: number) => void
 }
 
