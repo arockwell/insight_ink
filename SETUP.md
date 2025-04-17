@@ -83,6 +83,14 @@ npm install
 yarn install
 ```
 
+Note: You may see some npm deprecation warnings during installation. These are related to transitive dependencies (dependencies of our dependencies) and can be safely ignored. For example:
+
+```
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory...
+```
+
+These warnings don't affect the functionality of our application and will be resolved when the upstream packages update their dependencies.
+
 ## Step 5: Set Up the Database
 
 1. Initialize Prisma and apply migrations:
@@ -157,3 +165,7 @@ yarn test
 
 - Reset the database if needed: `npx prisma migrate reset`
 - Generate Prisma client: `npx prisma generate`
+
+### npm Dependency Warnings
+
+If you see npm deprecation warnings during installation, these can generally be ignored as they're related to transitive dependencies. The application will still function correctly, and these issues will be resolved as the upstream packages update.

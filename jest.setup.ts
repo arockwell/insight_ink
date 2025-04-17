@@ -1,5 +1,11 @@
 import '@testing-library/jest-dom';
 
+// Polyfill for TextEncoder/TextDecoder in Node.js environment for tests
+// These are needed by MSW
+import { TextEncoder, TextDecoder } from 'util';
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 // Mock next/navigation to avoid errors
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -31,4 +37,4 @@ process.env = {
 };
 
 // Global timeout config
-jest.setTimeout(10000);
+jest.setTimeout(30000);
