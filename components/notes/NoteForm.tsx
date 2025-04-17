@@ -40,68 +40,68 @@ export default function NoteForm({
     }
   }, [initialTags])
 
-  // Auto-save functionality
-  const autoSave = async () => {
-    if (!content && !title) return
-
-    setSaveStatus('saving')
-    try {
-      const url = noteId 
-        ? `/api/notes/${noteId}` 
-        : '/api/notes'
-      
-      const method = noteId ? 'PUT' : 'POST'
-      
-      const response = await fetch(url, {
-        method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: title || 'Untitled Note',
-          content,
-          category: category || undefined,
-          tagList,
-        }),
-      })
-      
-      if (!response.ok) {
-        throw new Error('Failed to save note')
-      }
-      
-      const savedNote = await response.json()
-      
-      // If we're creating a new note, redirect to edit page
-      if (!noteId && savedNote.id) {
-        router.push(`/notes/${savedNote.id}/edit`)
-      }
-      
-      setSaveStatus('saved')
-      
-      // Reset status after 2 seconds
-      setTimeout(() => {
-        setSaveStatus('idle')
-      }, 2000)
-    } catch (err) {
-      console.error('Error saving note:', err)
-      setSaveStatus('error')
-      setError('Failed to save note. Please try again.')
-      
-      // Reset status after 2 seconds
-      setTimeout(() => {
-        setSaveStatus('idle')
-      }, 2000)
-    }
-  }
 
   // Debounced auto-save
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      autoSave()
-    }, 2000)
+      if (!content && !title) return;
+
+      setSaveStatus('saving');
+      const saveNote = async () => {
+        try {
+          const url = noteId 
+            ? `/api/notes/${noteId}` 
+            : '/api/notes';
+          
+          const method = noteId ? 'PUT' : 'POST';
+          
+          const response = await fetch(url, {
+            method,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              title: title || 'Untitled Note',
+              content,
+              category: category || undefined,
+              tagList,
+            }),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to save note');
+          }
+          
+          const savedNote = await response.json();
+          
+          // If we're creating a new note, redirect to edit page
+          if (!noteId && savedNote.id) {
+            router.push(`/notes/${savedNote.id}/edit`);
+          }
+          
+          setSaveStatus('saved');
+          
+          // Reset status after 2 seconds
+          setTimeout(() => {
+            setSaveStatus('idle');
+          }, 2000);
+        } catch (err) {
+          console.error('Error saving note:', err);
+          setSaveStatus('error');
+          setError('Failed to save note. Please try again.');
+          
+          // Reset status after 2 seconds
+          setTimeout(() => {
+            setSaveStatus('idle');
+          }, 2000);
+        }
+      };
+      
+      saveNote();
+    }, 2000);
     
-    return () => clearTimeout(timeoutId)
-  }, [title, content, category, tagList, autoSave])
+    return () => clearTimeout(timeoutId);
+  }, [title, content, category, tagList, noteId, router])
 
   // Handle content change
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
