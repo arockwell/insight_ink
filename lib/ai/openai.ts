@@ -47,10 +47,10 @@ export async function generateSmartTags(content: string, limit: number = 5) {
       response_format: { type: 'json_object' },
     });
     
-    const content = response.choices[0].message.content;
-    if (!content) return [];
+    const responseContent = response.choices[0].message.content;
+    if (!responseContent) return [];
     
-    const data = JSON.parse(content);
+    const data = JSON.parse(responseContent);
     return data.tags || [];
   } catch (error) {
     console.error('Error generating tags:', error);
@@ -87,7 +87,7 @@ export async function generateTitle(content: string) {
 }
 
 // Implement semantic search
-export async function semanticSearch(query: string, limit: number = 10) {
+export async function semanticSearch(query: string, _limit: number = 10) {
   // Generate embedding for the query
   const embedding = await generateEmbedding(query);
   if (!embedding) return [];

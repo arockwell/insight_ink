@@ -31,9 +31,12 @@ export const noteService = {
     const { title, content, category, tagIds, tagList } = data;
     
     // Generate embedding if content is provided
-    let embedding = null;
+    let embeddingData = undefined;
     if (content) {
-      embedding = await generateEmbedding(content);
+      const embeddingArray = await generateEmbedding(content);
+      if (embeddingArray) {
+        embeddingData = embeddingArray;
+      }
     }
     
     // Generate title if not provided
@@ -52,7 +55,7 @@ export const noteService = {
         title: finalTitle,
         content,
         category,
-        embedding,
+        embedding: embeddingData as any, // Type assertion due to Prisma Json typing limitations
         noteTags: {
           create: processedTagIds.map(tagId => ({ tagId })),
         },
@@ -65,24 +68,25 @@ export const noteService = {
   async updateNote(id: number, data: NoteInput) {
     const { title, content, category, tagIds, tagList } = data;
     
+    // Build update data object
+    const updateData: any = {};
+    if (title !== undefined) updateData.title = title;
+    if (content !== undefined) updateData.content = content;
+    if (category !== undefined) updateData.category = category;
+    
     // Generate embedding if content changed
-    let embedding = undefined;
     if (content !== undefined) {
-      embedding = await generateEmbedding(content);
+      const embeddingArray = await generateEmbedding(content);
+      updateData.embedding = embeddingArray as any; // Type assertion due to Prisma Json typing limitations
     }
     
     // Process tags
     const processedTagIds = await this.processTagList(tagList, tagIds);
     
     // First, update the note
-    const note = await prisma.note.update({
+    await prisma.note.update({
       where: { id },
-      data: {
-        title,
-        content,
-        category,
-        embedding,
-      },
+      data: updateData,
     });
     
     // Then, update tags if needed

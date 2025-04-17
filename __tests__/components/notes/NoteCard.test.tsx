@@ -1,6 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import NoteCard from '@/components/notes/NoteCard';
-import { mockNotes } from '../../mocks/handlers';
+
+// Mock data
+const mockNote = {
+  id: 1,
+  title: 'Test Note 1',
+  content: 'This is test note 1',
+  category: 'Personal',
+  createdAt: '2023-01-01T00:00:00.000Z',
+  updatedAt: '2023-01-01T00:00:00.000Z',
+  noteTags: [{ tag: { id: 1, name: 'important', color: '#ef4444' } }],
+};
 
 // Mock fetch
 global.fetch = jest.fn(() =>
@@ -14,7 +24,6 @@ global.fetch = jest.fn(() =>
 window.confirm = jest.fn(() => true);
 
 describe('NoteCard', () => {
-  const mockNote = mockNotes[0];
   const mockOnDelete = jest.fn();
 
   beforeEach(() => {
@@ -25,13 +34,13 @@ describe('NoteCard', () => {
     render(<NoteCard note={mockNote} />);
     
     expect(screen.getByText(mockNote.title)).toBeInTheDocument();
-    expect(screen.getByText(mockNote.content!)).toBeInTheDocument();
+    expect(screen.getByText(mockNote.content)).toBeInTheDocument();
   });
 
   it('displays correct category badge', () => {
     render(<NoteCard note={mockNote} />);
     
-    expect(screen.getByText(mockNote.category!)).toBeInTheDocument();
+    expect(screen.getByText(mockNote.category)).toBeInTheDocument();
   });
 
   it('displays note tags', () => {

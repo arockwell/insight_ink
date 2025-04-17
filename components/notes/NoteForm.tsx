@@ -101,7 +101,7 @@ export default function NoteForm({
     }, 2000)
     
     return () => clearTimeout(timeoutId)
-  }, [title, content, category, tagList])
+  }, [title, content, category, tagList, autoSave])
 
   // Handle content change
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {

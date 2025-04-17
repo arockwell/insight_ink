@@ -1,10 +1,16 @@
 import '@testing-library/jest-dom';
 
 // Polyfill for TextEncoder/TextDecoder in Node.js environment for tests
-// These are needed by MSW
+// Note: We're not using global.TextEncoder/Decoder assignment to avoid type issues
 import { TextEncoder, TextDecoder } from 'util';
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+if (typeof globalThis.TextEncoder === 'undefined') {
+  // @ts-ignore - this is a polyfill
+  globalThis.TextEncoder = TextEncoder;
+}
+if (typeof globalThis.TextDecoder === 'undefined') {
+  // @ts-ignore - this is a polyfill
+  globalThis.TextDecoder = TextDecoder;
+}
 
 // Mock next/navigation to avoid errors
 jest.mock('next/navigation', () => ({
