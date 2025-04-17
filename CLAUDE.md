@@ -17,6 +17,7 @@ Insight Ink is an AI-powered note-taking application that helps users organize, 
 2. **Testing**
    - Write tests for new components and functions
    - Run tests with `npm test` before committing
+   - The OpenAI client is mocked in test environments - no API key needed
 
 3. **Commands to Run**
    - Lint: `npm run lint`
@@ -24,6 +25,8 @@ Insight Ink is an AI-powered note-taking application that helps users organize, 
    - Test: `npm test`
    - Dev server: `npm run dev`
    - Build: `npm run build`
+   - Docker: `docker-compose up -d`
+   - Validate pgvector: `npm run db:validate`
 
 4. **Feature Implementation Priorities**
    - Core note CRUD functionality
@@ -31,6 +34,12 @@ Insight Ink is an AI-powered note-taking application that helps users organize, 
    - AI-powered features (embeddings, auto-tagging)
    - UI components and styling
    - Authentication
+
+5. **CI/CD Guidelines**
+   - All PR builds should pass without requiring API keys
+   - Avoid using deprecated Next.js features
+   - Fix all ESLint warnings before committing
+   - Use React hooks properly, especially with dependencies
 
 ## File Structure Conventions
 
@@ -40,3 +49,5 @@ Insight Ink is an AI-powered note-taking application that helps users organize, 
 - `/prisma/*` - Database schema and migrations
 - `/public/*` - Static assets
 - `/styles/*` - Global styles
+- `/__tests__/*` - Test files
+- `/.github/workflows/*` - CI/CD configuration
