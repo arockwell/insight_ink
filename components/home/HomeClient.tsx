@@ -67,7 +67,7 @@ export default function HomeClient() {
           className="feature-card feature-card-success"
         >
           <div className="feature-icon-container feature-icon-success">
-            <PlusCircleIcon className="w-8 h-8 text-success-600" />
+            <PlusCircleIcon className="w-6 h-6 text-success-600" />
           </div>
           <h2 className="feature-title feature-title-success">Create Note</h2>
           <p className="feature-description">Start writing a new note</p>
