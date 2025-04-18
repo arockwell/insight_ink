@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import { Inter } from 'next/font/google'
 import type { Metadata } from 'next'
 import Sidebar from '@/components/ui/Sidebar'
+import { headers } from 'next/headers'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -19,6 +20,10 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // Get the current pathname
+  const headersList = headers();
+  const pathname = headersList.get("x-pathname") || "";
+  const isLandingPage = pathname === "/";
   return (
     <html lang="en" className={`${inter.variable}`}>
       <head>
@@ -28,11 +33,11 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} min-h-screen bg-gray-50 antialiased`}>
         <div className="relative flex min-h-screen">
-          {/* Sidebar */}
-          <Sidebar />
+          {/* Sidebar - only show if not on landing page */}
+          {!isLandingPage && <Sidebar />}
           
           {/* Main Content */}
-          <div className="flex-1 md:pl-64 w-full">
+          <div className={`flex-1 ${!isLandingPage ? 'md:pl-64' : ''} w-full`}>
             <div className="main-content-wrapper relative z-10 bg-gray-50">
               <main className="py-6 px-4 sm:px-6 md:px-8">
                 <div className="max-w-6xl mx-auto">
