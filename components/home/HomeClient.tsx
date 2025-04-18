@@ -38,9 +38,9 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh]">
-      <h1 className="text-4xl font-bold mb-4">Welcome to Insight Ink</h1>
-      <p className="text-xl mb-8">An AI-powered note-taking application</p>
+    <div className="flex flex-col items-center justify-center min-h-[70vh]">
+      <h1 className="text-3xl font-bold mb-3">Welcome to Insight Ink</h1>
+      <p className="text-lg mb-6">An AI-powered note-taking application</p>
       
       <div className="flex gap-4 mb-8">
         <a 
