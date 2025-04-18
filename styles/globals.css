@@ -33,11 +33,11 @@
 @layer components {
   /* ----- Layout Components ----- */
   .container-app {
-    @apply flex min-h-screen;
+    @apply flex min-h-screen relative;
   }
   
   .content-area {
-    @apply flex flex-col md:pl-64 flex-1;
+    @apply flex flex-col md:pl-64 flex-1 w-full;
   }
   
   .main-content {
@@ -54,11 +54,11 @@
 
   /* ----- Navigation Components ----- */
   .sidebar {
-    @apply hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0;
+    @apply hidden md:flex md:flex-col md:fixed md:inset-y-0 h-full w-64 z-20;
   }
   
   .sidebar-content {
-    @apply flex flex-col flex-grow overflow-y-auto bg-gradient-to-b from-primary-800 via-primary-700 to-primary-800 shadow-xl;
+    @apply flex flex-col flex-grow overflow-y-auto bg-gradient-to-b from-primary-800 via-primary-700 to-primary-800 shadow-xl w-full;
   }
   
   .sidebar-header {
@@ -94,7 +94,7 @@
   }
   
   .nav-icon {
-    @apply mr-3 flex-shrink-0;
+    @apply mr-3 flex-shrink-0 h-5 w-5;
   }
   
   .nav-icon-active {

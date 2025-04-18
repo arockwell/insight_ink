@@ -20,17 +20,20 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className={`${inter.className} min-h-screen antialiased`}>
-        <div className="container-app">
+    <html lang="en" className={`${inter.variable}`}>
+      <body className={`${inter.className} min-h-screen bg-gray-50 antialiased`}>
+        <div className="min-h-screen">
+          {/* Sidebar */}
           <Sidebar />
-          <div className="content-area">
-            <main className="main-content">
-              <div className="content-container">
+          
+          {/* Main Content */}
+          <div className="md:pl-64">
+            <main className="py-6 px-4 sm:px-6 md:px-8">
+              <div className="max-w-6xl mx-auto">
                 {children}
               </div>
             </main>
-            <footer className="page-footer">
+            <footer className="py-4 px-6 text-center text-sm text-gray-500">
               <p>© {new Date().getFullYear()} Insight Ink. All rights reserved.</p>
             </footer>
           </div>
