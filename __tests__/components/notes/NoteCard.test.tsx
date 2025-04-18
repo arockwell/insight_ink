@@ -60,6 +60,9 @@ describe('NoteCard', () => {
     expect(window.confirm).toHaveBeenCalled();
     expect(fetch).toHaveBeenCalledWith(`/api/notes/${mockNote.id}`, {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
     
     // Wait for the async operation to complete
