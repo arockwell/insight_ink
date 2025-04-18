@@ -42,7 +42,6 @@ export default function NoteForm({
     }
   }, [initialTags])
 
-
   // Debounced auto-save
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -159,9 +158,9 @@ export default function NoteForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="form-group">
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4">
+        <div className="form-error">
           <div className="flex">
             <div className="flex-shrink-0">
               <XCircleIcon 
@@ -223,7 +222,7 @@ export default function NoteForm({
           value={tagList}
           onChange={(e) => setTagList(e.target.value)}
         />
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="form-hint">
           Enter tags separated by commas (e.g., important, todo, reference)
         </p>
       </div>
@@ -252,10 +251,10 @@ Write your notes using **markdown** formatting..."
              'Error saving changes'}
           </div>
         </div>
-        <p className="mt-1 text-xs text-gray-500">Supports Markdown formatting</p>
+        <p className="form-hint">Supports Markdown formatting</p>
       </div>
 
-      <div className="flex justify-end space-x-3">
+      <div className="form-actions">
         <button
           type="button"
           onClick={() => router.push('/notes')}
