@@ -26,14 +26,19 @@ export default function Sidebar() {
     width: '256px',
     backgroundColor: '#0369a1',
     color: 'white',
-    display: 'none',
+    display: 'block',
     zIndex: 40,
+    transform: 'translateX(-256px)',
+    transition: 'transform 0.3s ease-in-out',
   }
 
   const mediaQuery = `
     @media (min-width: 768px) {
       #sidebar-container {
-        display: block !important;
+        transform: translateX(0) !important;
+      }
+      .md\\:pl-64 {
+        padding-left: 256px !important;
       }
     }
   `

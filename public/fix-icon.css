@@ -1,0 +1,53 @@
+/* Aggressively hide all blue SVGs and large SVGs that could be the problematic icon */
+svg:not([class]),
+svg[fill="blue"],
+svg[fill="#0000ff"],
+svg[stroke="blue"], 
+svg[stroke="#0000ff"],
+svg[color="blue"],
+svg[color="#0000ff"],
+svg path[fill="blue"],
+svg path[fill="#0000ff"],
+svg:not([class]) path,
+svg[width="100%"],
+svg[height="100%"],
+svg[width^="5"],
+svg[height^="5"],
+svg[width^="4"],
+svg[height^="4"],
+svg[width^="3"],
+svg[height^="3"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  position: absolute !important;
+  z-index: -100 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Target any SVG inside the main content area specifically */
+.main-content-wrapper svg:not(.heroicons-react-component) {
+  display: none !important;
+}
+
+/* Ensure the main content wrapper has proper z-index and background */
+.main-content-wrapper {
+  position: relative;
+  z-index: 10;
+  background-color: #f9fafb;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Apply proper z-index to all content elements */
+.max-w-6xl, 
+.hero-title, 
+.hero-subtitle,
+.feature-card,
+.api-key-button,
+.api-key-form {
+  position: relative;
+  z-index: 10;
+}
