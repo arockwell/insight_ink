@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { formatDistanceToNow } from '@/lib/utils/dateUtils'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -47,7 +48,7 @@ export default function NoteCard({ note, onDelete }: NoteCardProps) {
     if (window.confirm('Are you sure you want to delete this note?')) {
       setIsDeleting(true)
       try {
-        await fetch(`/api/notes/${note.id}`, {
+        await fetchWithAuth(`/api/notes/${note.id}`, {
           method: 'DELETE',
         })
         

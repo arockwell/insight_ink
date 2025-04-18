@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -21,7 +22,7 @@ export default function TagsPage() {
     const fetchTags = async () => {
       try {
         setLoading(true)
-        const response = await fetch('/api/tags')
+        const response = await fetchWithAuth('/api/tags')
         
         if (!response.ok) {
           throw new Error('Failed to fetch tags')
@@ -44,7 +45,7 @@ export default function TagsPage() {
   const handleDeleteTag = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this tag? It will be removed from all notes.')) {
       try {
-        const response = await fetch(`/api/tags/${id}`, {
+        const response = await fetchWithAuth(`/api/tags/${id}`, {
           method: 'DELETE',
         })
         

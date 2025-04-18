@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import NoteCard from '@/components/notes/NoteCard'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -34,7 +35,7 @@ export default function NotesPage() {
     const fetchNotes = async () => {
       try {
         setLoading(true)
-        const response = await fetch('/api/notes')
+        const response = await fetchWithAuth('/api/notes')
         
         if (!response.ok) {
           throw new Error('Failed to fetch notes')
