@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { DocumentTextIcon, PlusCircleIcon, KeyIcon, BeakerIcon } from '@heroicons/react/24/outline';
 import { getApiKey, setApiKey, hasApiKey } from '@/lib/utils/apiUtils';
 
 export default function HomeClient() {
@@ -39,48 +41,68 @@ export default function HomeClient() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
-      <h1 className="text-3xl font-bold mb-3">Welcome to Insight Ink</h1>
-      <p className="text-lg mb-6">An AI-powered note-taking application</p>
+      <header className="text-center mb-10">
+        <h1 className="hero-title">
+          Welcome to Insight Ink
+        </h1>
+        <p className="hero-subtitle">
+          An AI-powered note-taking application that helps you organize your thoughts and ideas
+        </p>
+      </header>
       
-      <div className="flex gap-4 mb-8">
-        <a 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 w-full max-w-2xl">
+        <Link 
           href="/notes" 
-          className="px-4 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 transition"
+          className="feature-card feature-card-primary"
         >
-          Browse Notes
-        </a>
-        <a 
+          <div className="feature-icon-container feature-icon-primary">
+            <DocumentTextIcon className="w-8 h-8 text-primary-600" />
+          </div>
+          <h2 className="feature-title feature-title-primary">Browse Notes</h2>
+          <p className="feature-description">View and manage your existing notes</p>
+        </Link>
+        
+        <Link 
           href="/notes/new" 
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+          className="feature-card feature-card-success"
         >
-          Create Note
-        </a>
+          <div className="feature-icon-container feature-icon-success">
+            <PlusCircleIcon className="w-8 h-8 text-success-600" />
+          </div>
+          <h2 className="feature-title feature-title-success">Create Note</h2>
+          <p className="feature-description">Start writing a new note</p>
+        </Link>
       </div>
       
       {/* API Key Management */}
-      <div className="mt-8 w-full max-w-md">
+      <div className="mt-4 w-full max-w-md">
         {!showApiKeyForm ? (
           <button
             onClick={() => setShowApiKeyForm(true)}
-            className="w-full px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 transition"
+            className="api-key-button"
           >
+            <KeyIcon className="w-5 h-5 mr-2 text-gray-500" />
             {isAuthenticated ? 'Update API Key' : 'Set API Key'}
           </button>
         ) : (
-          <div className="bg-white shadow-md rounded p-6">
-            <h2 className="text-xl font-semibold mb-4">
+          <div className="api-key-form">
+            <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
+              <KeyIcon className="w-5 h-5 mr-2 text-primary-500" />
               {isAuthenticated ? 'Update API Key' : 'Set API Key'}
             </h2>
             
             {apiKeySaved && (
-              <div className="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+              <div className="api-form-success">
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
+                </svg>
                 <p>API key saved successfully!</p>
               </div>
             )}
             
             <form onSubmit={handleSubmitApiKey} className="space-y-4">
               <div>
-                <label htmlFor="apiKey" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="apiKey" className="label">
                   API Key
                 </label>
                 <input
@@ -88,7 +110,7 @@ export default function HomeClient() {
                   id="apiKey"
                   value={apiKey}
                   onChange={handleApiKeyChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  className="input"
                   placeholder="Enter your API key"
                   required
                 />
@@ -96,21 +118,21 @@ export default function HomeClient() {
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  className="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="flex-1 btn btn-primary"
                 >
                   Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowApiKeyForm(false)}
-                  className="flex-1 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="flex-1 btn btn-secondary"
                 >
                   Cancel
                 </button>
               </div>
             </form>
             
-            <div className="mt-4 text-sm text-gray-500">
+            <div className="api-form-hint">
               <p>The API key can be found in your .env file as API_SECRET_KEY.</p>
             </div>
           </div>
@@ -119,12 +141,13 @@ export default function HomeClient() {
       
       {/* Debug Link */}
       <div className="mt-8">
-        <a 
+        <Link 
           href="/debug" 
-          className="text-sm text-gray-500 hover:text-gray-700"
+          className="text-sm text-gray-500 hover:text-gray-700 flex items-center transition-colors duration-200"
         >
+          <BeakerIcon className="w-4 h-4 mr-1" />
           Debug Environment
-        </a>
+        </Link>
       </div>
     </div>
   );
