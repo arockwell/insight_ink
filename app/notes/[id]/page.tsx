@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import ReactMarkdown from 'react-markdown'
 import { formatDistanceToNow } from '@/lib/utils/dateUtils'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -38,7 +39,7 @@ export default function NoteDetailPage() {
     const fetchNote = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`/api/notes/${params.id}`)
+        const response = await fetchWithAuth(`/api/notes/${params.id}`)
         
         if (!response.ok) {
           throw new Error('Failed to fetch note')
@@ -63,7 +64,7 @@ export default function NoteDetailPage() {
     if (window.confirm('Are you sure you want to delete this note?')) {
       setIsDeleting(true)
       try {
-        const response = await fetch(`/api/notes/${params.id}`, {
+        const response = await fetchWithAuth(`/api/notes/${params.id}`, {
           method: 'DELETE',
         })
         

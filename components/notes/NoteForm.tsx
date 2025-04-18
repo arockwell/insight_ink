@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -55,7 +56,7 @@ export default function NoteForm({
           
           const method = noteId ? 'PUT' : 'POST';
           
-          const response = await fetch(url, {
+          const response = await fetchWithAuth(url, {
             method,
             headers: {
               'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ export default function NoteForm({
       
       const method = noteId ? 'PUT' : 'POST'
       
-      const response = await fetch(url, {
+      const response = await fetchWithAuth(url, {
         method,
         headers: {
           'Content-Type': 'application/json',

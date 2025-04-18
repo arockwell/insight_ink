@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import NoteCard from '@/components/notes/NoteCard'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -38,7 +39,7 @@ export default function TagDetailPage() {
         setLoading(true)
         
         // Fetch tag
-        const tagResponse = await fetch(`/api/tags/${params.id}`)
+        const tagResponse = await fetchWithAuth(`/api/tags/${params.id}`)
         if (!tagResponse.ok) {
           throw new Error('Failed to fetch tag')
         }
@@ -46,7 +47,7 @@ export default function TagDetailPage() {
         setTag(tagData)
         
         // Fetch notes with this tag
-        const notesResponse = await fetch(`/api/tags/${params.id}/notes`)
+        const notesResponse = await fetchWithAuth(`/api/tags/${params.id}/notes`)
         if (!notesResponse.ok) {
           throw new Error('Failed to fetch notes')
         }

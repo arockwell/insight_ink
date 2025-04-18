@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import NoteForm from '@/components/notes/NoteForm'
+import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
   id: number
@@ -32,7 +33,7 @@ export default function EditNotePage() {
     const fetchNote = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`/api/notes/${params.id}`)
+        const response = await fetchWithAuth(`/api/notes/${params.id}`)
         
         if (!response.ok) {
           throw new Error('Failed to fetch note')
