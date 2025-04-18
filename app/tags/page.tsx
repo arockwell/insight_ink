@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { XCircleIcon, TagIcon, TrashIcon } from '@heroicons/react/24/solid'
+import { TagIcon as TagOutlineIcon } from '@heroicons/react/24/outline'
 import { fetchWithAuth } from '@/lib/utils/apiUtils'
 
 type Tag = {
@@ -64,21 +65,26 @@ export default function TagsPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">All Tags</h1>
+      <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-200 dark:border-gray-700">
+        <h1 className="page-title mb-0 pb-0 border-0">
+          <span className="flex items-center">
+            <TagOutlineIcon className="w-7 h-7 mr-2 text-accent-500" />
+            All Tags
+          </span>
+        </h1>
       </div>
       
       {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+        <div className="flex flex-col justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent-600 mb-4"></div>
+          <p className="text-gray-500 animate-pulse">Loading tags...</p>
         </div>
       ) : error ? (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
           <div className="flex">
             <div className="flex-shrink-0">
               <XCircleIcon 
-                className="text-red-400" 
-                style={{ width: '20px', height: '20px' }} 
+                className="text-red-400 w-5 h-5" 
                 aria-hidden="true" 
               />
             </div>
@@ -88,48 +94,64 @@ export default function TagsPage() {
           </div>
         </div>
       ) : tags.length === 0 ? (
-        <div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg shadow">
-          <TagIcon 
-            className="mx-auto text-gray-400" 
-            style={{ width: '48px', height: '48px' }} 
-            aria-hidden="true" 
-          />
-          <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-white">No tags yet</h3>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Tags will appear here when you add them to your notes.
+        <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl shadow-soft border border-gray-100 dark:border-gray-700">
+          <div className="w-20 h-20 mx-auto bg-accent-50 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+            <TagIcon 
+              className="text-accent-400 w-10 h-10" 
+              aria-hidden="true" 
+            />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No tags yet</h3>
+          <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
+            Tags will appear here when you add them to your notes. Tags help you organize and categorize your notes.
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-5 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {tags.map(tag => (
             <div
               key={tag.id}
-              className="bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden flex flex-col"
+              className="card hover:border-accent-200 transition-all duration-200 flex flex-col p-0 overflow-hidden"
             >
-              <div className="flex-1 px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+              <div 
+                className="h-2 w-full"
+                style={{ backgroundColor: tag.color }}
+              ></div>
+              <div className="flex-1 px-5 py-4">
                 <Link 
                   href={`/tags/${tag.id}`}
-                  className="flex items-center"
+                  className="group"
                 >
-                  <div
-                    className="w-4 h-4 rounded-full mr-2"
-                    style={{ backgroundColor: tag.color }}
-                  />
-                  <h3 className="text-base font-medium text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400">
-                    {tag.name}
-                  </h3>
+                  <div className="flex items-center mb-2">
+                    <div
+                      className="w-5 h-5 rounded-full mr-2 shadow-sm"
+                      style={{ backgroundColor: tag.color }}
+                    />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors duration-200">
+                      {tag.name}
+                    </h3>
+                  </div>
                 </Link>
-              </div>
-              <div className="px-4 py-2 flex justify-end">
-                <button
-                  onClick={() => handleDeleteTag(tag.id)}
-                  className="text-red-600 hover:text-red-800"
-                >
-                  <TrashIcon 
-                    style={{ width: '20px', height: '20px' }} 
-                    aria-hidden="true" 
-                  />
-                </button>
+                
+                <div className="flex justify-between items-center mt-3 pt-3 border-t border-gray-100 dark:border-gray-700">
+                  <Link 
+                    href={`/tags/${tag.id}`}
+                    className="text-sm text-gray-600 hover:text-accent-600 transition-colors duration-200"
+                  >
+                    View notes
+                  </Link>
+                  
+                  <button
+                    onClick={() => handleDeleteTag(tag.id)}
+                    className="p-1.5 text-gray-500 hover:text-red-600 bg-gray-50 hover:bg-red-50 rounded-md transition-colors duration-200"
+                    aria-label="Delete tag"
+                  >
+                    <TrashIcon 
+                      className="w-4 h-4" 
+                      aria-hidden="true" 
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           ))}
