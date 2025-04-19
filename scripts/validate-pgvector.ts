@@ -30,16 +30,40 @@ async function main() {
     await prisma.$connect();
     console.log('✅ Database connection successful');
     
-    // Check pgvector extension
+    // Check pgvector extension using a direct SQL query instead of ORM
     console.log('Checking pgvector extension...');
-    const result = await prisma.$queryRaw`SELECT * FROM pg_extension WHERE extname = 'vector'`;
+    try {
+      // First method: Check using pg_extension
+      const result = await prisma.$queryRaw`SELECT * FROM pg_extension WHERE extname = 'vector'`;
+      
+      if (Array.isArray(result) && result.length > 0) {
+        console.log('✅ pgvector extension is installed (confirmed via pg_extension)');
+      } else {
+        // Second method: Try a direct Docker command as fallback
+        console.log('Extension not found via Prisma query, trying direct Docker command...');
+        const { stdout } = await execAsync('docker exec insight_ink-postgres-1 psql -U postgres -d insight_ink -c "SELECT * FROM pg_extension WHERE extname = \'vector\';"');
+        
+        if (stdout.includes('vector')) {
+          console.log('✅ pgvector extension is installed (confirmed via direct query)');
+        } else {
+          throw new Error('pgvector extension not found');
+        }
+      }
+    } catch (error) {
+      console.error('❌ pgvector extension is not installed or not properly configured.');
+      console.log('Please run: docker exec insight_ink-postgres-1 psql -U postgres -d insight_ink -c "CREATE EXTENSION IF NOT EXISTS vector;"');
+      process.exit(1);
+    }
     
-    if (Array.isArray(result) && result.length > 0) {
-      console.log('✅ pgvector extension is installed');
-    } else {
-      console.error('❌ pgvector extension is not installed.');
-      console.log('Please run: docker-compose exec postgres psql -U postgres -d insight_ink -c "CREATE EXTENSION IF NOT EXISTS vector;"');
-      return;
+    // Test database schema and tables
+    console.log('Checking database schema...');
+    const tables = await prisma.$queryRaw`SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'`;
+    console.log('Found tables:', tables);
+    
+    if (!Array.isArray(tables) || tables.length === 0) {
+      console.error('❌ No tables found in the database. Schema may not be initialized.');
+      console.log('Please run: npx prisma db push');
+      process.exit(1);
     }
     
     // Test vector functionality by creating a note with an embedding
