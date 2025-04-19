@@ -59,10 +59,10 @@ You should see `CREATE EXTENSION` if successful.
 1. Copy the example environment file:
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-2. Update the database URL in `.env.local`:
+2. Update the database URL in `.env`:
 
 ```
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/insight_ink"
@@ -93,21 +93,35 @@ These warnings don't affect the functionality of our application and will be res
 
 ## Step 5: Set Up the Database
 
-1. Initialize Prisma and apply migrations:
+We recommend using Prisma's `db push` instead of migrations to avoid potential timeout issues with advisory locks:
+
+1. Initialize the database schema:
 
 ```bash
-npx prisma migrate dev --name init
+npx prisma db push
 ```
 
 This will:
 - Create the database tables based on your schema
 - Generate the Prisma client
-- Enable the pgvector extension
+- Work with the pgvector extension
 
 2. (Optional) Seed the database with sample data:
 
 ```bash
-npx prisma db seed
+npm run db:seed
+```
+
+3. Verify the setup:
+
+```bash
+npm run db:validate
+```
+
+Alternatively, you can run the full setup command which will handle all these steps:
+
+```bash
+npm run setup
 ```
 
 ## Step 6: Start the Development Server
@@ -161,11 +175,22 @@ yarn test
 - Verify the extension is created: `docker-compose exec postgres psql -U postgres -d insight_ink -c "\\dx"`
 - If needed, recreate the extension manually: `docker-compose exec postgres psql -U postgres -d insight_ink -c "CREATE EXTENSION vector;"`
 
-### Prisma Migration Issues
+### Prisma Migration Timeouts
 
-- Reset the database if needed: `npx prisma migrate reset`
-- Generate Prisma client: `npx prisma generate`
+If you encounter this error when running Prisma migrations:
+
+```
+Error: P1002
+The database server at `localhost:5432` was reached but timed out.
+Context: Timed out trying to acquire a postgres advisory lock
+```
+
+Use `npx prisma db push` instead, which applies schema changes without requiring advisory locks.
 
 ### npm Dependency Warnings
 
 If you see npm deprecation warnings during installation, these can generally be ignored as they're related to transitive dependencies. The application will still function correctly, and these issues will be resolved as the upstream packages update.
+
+## Additional Resources
+
+For more detailed information about the database setup and troubleshooting, see [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md).
