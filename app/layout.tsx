@@ -22,9 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable}`}>
       <head>
-        <link rel="stylesheet" href="/styles.css" />
+        {/* Load our bundled CSS directly */}
+        <link rel="stylesheet" href="/styles/styles.css" />
         <link rel="stylesheet" href="/fix-icon.css" />
-        <script src="/fix-svg.js" async></script>
       </head>
   <body className={`${inter.className}`}>
     <div className="container-app">
