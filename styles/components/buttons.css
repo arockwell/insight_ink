@@ -1,0 +1,31 @@
+/**
+ * Button Components
+ */
+
+.btn {
+  @apply px-4 py-2 rounded-md font-medium transition-all duration-200 text-sm shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:from-primary-700 hover:to-primary-800 hover:shadow-md transform hover:-translate-y-0.5;
+}
+
+.btn-secondary {
+  @apply bg-white text-gray-800 border border-gray-300 hover:bg-gray-50 hover:shadow hover:-translate-y-0.5;
+}
+
+.btn-icon {
+  @apply p-1.5 text-gray-500 bg-gray-50 rounded-md transition-colors duration-200;
+}
+
+.btn-icon-edit {
+  @apply hover:text-primary-600 hover:bg-gray-100;
+}
+
+.btn-icon-delete {
+  @apply hover:text-red-600 hover:bg-red-50;
+}
+
+.btn-new-note {
+  @apply flex items-center justify-center px-4 py-2.5 rounded-lg shadow-sm text-sm font-medium bg-white hover:bg-gray-50 text-primary-700 transition-all duration-200 hover:shadow transform hover:-translate-y-0.5;
+}
