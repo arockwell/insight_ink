@@ -164,8 +164,7 @@ export default function NoteForm({
           <div className="flex">
             <div className="flex-shrink-0">
               <XCircleIcon 
-                className="text-red-400" 
-                style={{ width: '20px', height: '20px' }} 
+                className="text-red-400 w-5 h-5" 
                 aria-hidden="true" 
               />
             </div>
@@ -243,8 +242,7 @@ Write your notes using **markdown** formatting..."
             onChange={handleContentChange}
           />
           <div 
-            className="absolute bottom-2 right-2 text-xs text-gray-500 italic" 
-            style={{ visibility: saveStatus === 'idle' ? 'hidden' : 'visible' }}
+            className={`save-status ${saveStatus === 'idle' ? 'save-status-hidden' : 'save-status-visible'}`}
           >
             {saveStatus === 'saving' ? 'Auto-saving...' : 
              saveStatus === 'saved' ? 'Changes saved' : 

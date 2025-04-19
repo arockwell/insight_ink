@@ -287,4 +287,17 @@
   .api-form-hint {
     @apply mt-4 text-sm text-gray-500 bg-gray-50 p-3 rounded-md border border-gray-100;
   }
+  
+  /* ----- Status Indicators ----- */
+  .save-status {
+    @apply absolute bottom-2 right-2 text-xs text-gray-500 italic;
+  }
+  
+  .save-status-hidden {
+    @apply hidden;
+  }
+  
+  .save-status-visible {
+    @apply block;
+  }
 }
