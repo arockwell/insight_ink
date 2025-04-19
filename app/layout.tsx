@@ -26,25 +26,25 @@ export default function RootLayout({
         <link rel="stylesheet" href="/styles/styles.css" />
         <link rel="stylesheet" href="/fix-icon.css" />
       </head>
-  <body className={`${inter.className}`}>
-    <div className="container-app">
-      {/* Sidebar */}
-      <Sidebar />
-      
-      {/* Main Content */}
-      <div className="content-area">
-        <div className="relative z-10 bg-gray-50">
-          <main className="main-content">
-            <div className="content-container">
-              {children}
+      <body className={`${inter.className}`}>
+        <div className="container-app">
+          {/* Sidebar */}
+          <Sidebar />
+          
+          {/* Main Content */}
+          <div className="content-area">
+            <div className="relative z-10 bg-gray-50">
+              <main className="main-content">
+                <div className="content-container">
+                  {children}
+                </div>
+              </main>
+              <footer className="page-footer">
+                <p>© {new Date().getFullYear()} Insight Ink. All rights reserved.</p>
+              </footer>
             </div>
-          </main>
-          <footer className="page-footer">
-            <p>© {new Date().getFullYear()} Insight Ink. All rights reserved.</p>
-          </footer>
+          </div>
         </div>
-      </div>
-    </div>
       </body>
     </html>
   )
