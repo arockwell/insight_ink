@@ -1,155 +1,125 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { DocumentTextIcon, PlusCircleIcon, KeyIcon, BeakerIcon } from '@heroicons/react/24/outline';
-import { getApiKey, setApiKey, hasApiKey } from '@/lib/utils/apiUtils';
-
-// We'll use our component classes instead of inline styles
+import Link from 'next/link'
 
 export default function HomeClient() {
-  const [apiKey, setLocalApiKey] = useState<string>('');
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [showApiKeyForm, setShowApiKeyForm] = useState<boolean>(false);
-  const [apiKeySaved, setApiKeySaved] = useState<boolean>(false);
-
-  // Check if API key is already set
-  useEffect(() => {
-    setIsAuthenticated(hasApiKey());
-    const savedKey = getApiKey();
-    if (savedKey) {
-      setLocalApiKey(savedKey);
-    }
-  }, []);
-
-  // Handle API key submission
-  const handleSubmitApiKey = (e: React.FormEvent) => {
-    e.preventDefault();
-    setApiKey(apiKey);
-    setIsAuthenticated(true);
-    setApiKeySaved(true);
-    
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      setApiKeySaved(false);
-      setShowApiKeyForm(false);
-    }, 3000);
-  };
-
-  // Handle API key input change
-  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalApiKey(e.target.value);
-  };
-
   return (
-    <div className="relative">
-      <div className="flex flex-col items-center justify-center min-h-[70vh] relative z-10 bg-gray-50 w-full">
-        <header className="text-center mb-10">
-          <h1 className="hero-title">
-            Welcome to Insight Ink
-          </h1>
-          <p className="hero-subtitle">
-            An AI-powered note-taking application that helps you organize your thoughts and ideas
-          </p>
-        </header>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12 w-full max-w-2xl">
-          <Link 
-            href="/notes" 
-            className="feature-card feature-card-primary"
-          >
-            <div className="feature-icon-container feature-icon-primary">
-              <DocumentTextIcon className="w-8 h-8 text-primary-600" />
-            </div>
-            <h2 className="feature-title feature-title-primary">Browse Notes</h2>
-            <p className="feature-description">View and manage your existing notes</p>
-          </Link>
-          
-          <Link 
-            href="/notes/new" 
-            className="feature-card feature-card-success"
-          >
-            <div className="feature-icon-container feature-icon-success">
-              <PlusCircleIcon className="w-6 h-6 text-success-600" />
-            </div>
-            <h2 className="feature-title feature-title-success">Create Note</h2>
-            <p className="feature-description">Start writing a new note</p>
-          </Link>
-        </div>
-        
-        {/* API Key Management */}
-        <div className="mt-4 w-full max-w-md">
-          {!showApiKeyForm ? (
-            <button
-              onClick={() => setShowApiKeyForm(true)}
-              className="api-key-button"
-            >
-              <KeyIcon className="w-5 h-5 mr-2 text-gray-500" />
-              {isAuthenticated ? 'Update API Key' : 'Set API Key'}
-            </button>
-          ) : (
-            <div className="api-key-form">
-              <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center">
-                <KeyIcon className="w-5 h-5 mr-2 text-primary-500" />
-                {isAuthenticated ? 'Update API Key' : 'Set API Key'}
-              </h2>
-              
-              {apiKeySaved && (
-                <div className="api-form-success">
-                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"></path>
-                  </svg>
-                  <p>API key saved successfully!</p>
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 pt-12">
+      {/* Hero Section */}
+      <div className="relative pt-8 pb-24 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-8">
+            <div className="sm:text-center md:max-w-2xl md:mx-auto lg:col-span-6 lg:text-left">
+              <h1>
+                <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
+                  <span className="hero-title">Capture ideas with AI-powered notes</span>
+                </span>
+              </h1>
+              <p className="mt-3 hero-subtitle">
+                Insight Ink helps you organize your thoughts with AI-powered tagging, semantic search, and smart suggestions.
+              </p>
+              <div className="mt-8 sm:max-w-lg sm:mx-auto sm:text-center lg:text-left lg:mx-0">
+                <div className="space-x-4">
+                  <Link href="/signup" className="btn btn-primary text-lg px-8 py-3">
+                    Get Started
+                  </Link>
+                  <Link href="/login" className="btn btn-secondary text-lg px-8 py-3">
+                    Sign In
+                  </Link>
                 </div>
-              )}
-              
-              <form onSubmit={handleSubmitApiKey} className="space-y-4">
-                <div>
-                  <label htmlFor="apiKey" className="label">
-                    API Key
-                  </label>
-                  <input
-                    type="password"
-                    id="apiKey"
-                    value={apiKey}
-                    onChange={handleApiKeyChange}
-                    className="input"
-                    placeholder="Enter your API key"
-                    required
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <button
-                    type="submit"
-                    className="flex-1 btn btn-primary"
-                  >
-                    Save
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setShowApiKeyForm(false)}
-                    className="flex-1 btn btn-secondary"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-              
-              <div className="api-form-hint">
-                <p>The API key can be found in your .env file as API_SECRET_KEY.</p>
               </div>
             </div>
-          )}
+            <div className="mt-12 relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
+              <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
+                <div 
+                  className="w-full h-64 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+                  style={{ minHeight: '300px' }}
+                >
+                  <div className="text-white text-xl font-bold">Insight Ink</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        
-        {/* Debug Link */}
-        <div className="mt-8">
-          <Link 
-            href="/debug" 
-            className="text-sm text-gray-500 hover:text-gray-700 flex items-center transition-colors duration-200"
+      </div>
+      
+      {/* Features Section */}
+      <div className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:text-center">
+            <h2 className="text-base text-primary-600 font-semibold tracking-wide uppercase">Features</h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Smarter note-taking
+            </p>
+            <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+              Everything you need to capture, organize, and find your ideas.
+            </p>
+          </div>
+
+          <div className="mt-10">
+            <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+              {/* Feature 1 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md">
+                  <span className="text-lg font-bold">T</span>
+                </div>
+                <p className="ml-16 text-lg leading-6 font-medium text-gray-900">AI-Powered Tagging</p>
+                <div className="mt-2 ml-16 text-base text-gray-500">
+                  Automatically tag your notes using AI to keep everything organized.
+                </div>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md">
+                  <span className="text-lg font-bold">S</span>
+                </div>
+                <p className="ml-16 text-lg leading-6 font-medium text-gray-900">Semantic Search</p>
+                <div className="mt-2 ml-16 text-base text-gray-500">
+                  Find what you're looking for even if you don't remember the exact words.
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md">
+                  <span className="text-lg font-bold">M</span>
+                </div>
+                <p className="ml-16 text-lg leading-6 font-medium text-gray-900">Markdown Support</p>
+                <div className="mt-2 ml-16 text-base text-gray-500">
+                  Write notes in markdown for rich formatting and structure.
+                </div>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="relative">
+                <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md">
+                  <span className="text-lg font-bold">V</span>
+                </div>
+                <p className="ml-16 text-lg leading-6 font-medium text-gray-900">Version History</p>
+                <div className="mt-2 ml-16 text-base text-gray-500">
+                  Never lose your work with automatic version history tracking.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* CTA Section */}
+      <div className="bg-primary-700">
+        <div className="max-w-2xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+            <span className="block">Ready to start taking smarter notes?</span>
+          </h2>
+          <p className="mt-4 text-lg leading-6 text-primary-200">
+            Join thousands of users who are organizing their thoughts more efficiently.
+          </p>
+          <Link
+            href="/signup"
+            className="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-primary-50 sm:w-auto"
           >
-            <BeakerIcon className="w-4 h-4 mr-1" />
-            Debug Environment
+            Sign up for free
           </Link>
         </div>
       </div>
