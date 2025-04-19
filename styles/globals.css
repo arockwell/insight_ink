@@ -51,6 +51,14 @@
   .page-footer {
     @apply py-4 px-6 text-center text-sm text-gray-500;
   }
+  
+  .home-section {
+    @apply relative;
+  }
+  
+  .home-content {
+    @apply flex flex-col items-center justify-center min-h-[70vh] relative z-10 bg-gray-50 w-full;
+  }
 
   /* ----- Navigation Components ----- */
   .sidebar {

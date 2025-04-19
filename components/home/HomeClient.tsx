@@ -5,14 +5,6 @@ import Link from 'next/link';
 import { DocumentTextIcon, PlusCircleIcon, KeyIcon, BeakerIcon } from '@heroicons/react/24/outline';
 import { getApiKey, setApiKey, hasApiKey } from '@/lib/utils/apiUtils';
 
-// Add custom styles to fix layout
-const pageStyle: React.CSSProperties = {
-  position: 'relative',
-  zIndex: 10,
-  backgroundColor: '#f9fafb', // Match bg-gray-50
-  width: '100%',
-};
-
 export default function HomeClient() {
   const [apiKey, setLocalApiKey] = useState<string>('');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -48,8 +40,8 @@ export default function HomeClient() {
   };
 
   return (
-    <div className="relative">
-      <div className="flex flex-col items-center justify-center min-h-[70vh]" style={pageStyle}>
+    <section className="home-section">
+      <div className="home-content">
         <header className="text-center mb-10">
           <h1 className="hero-title">
             Welcome to Insight Ink
@@ -159,6 +151,6 @@ export default function HomeClient() {
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
