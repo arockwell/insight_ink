@@ -1,0 +1,44 @@
+/**
+ * Form Components
+ */
+
+.input {
+  @apply block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
+}
+
+.label {
+  @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1;
+}
+
+.form-hint {
+  @apply mt-1 text-xs text-gray-500;
+}
+
+.form-group {
+  @apply space-y-6;
+}
+
+.form-actions {
+  @apply flex justify-end space-x-3;
+}
+
+.form-error {
+  @apply bg-red-50 border-l-4 border-red-400 p-4;
+}
+
+/* API Key Form Components */
+.api-key-button {
+  @apply w-full px-4 py-3 bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 flex items-center justify-center shadow-sm;
+}
+
+.api-key-form {
+  @apply bg-white shadow-card rounded-xl p-6 border border-gray-100;
+}
+
+.api-form-success {
+  @apply mb-4 bg-success-50 border border-success-200 text-success-700 px-4 py-3 rounded-lg flex items-center;
+}
+
+.api-form-hint {
+  @apply mt-4 text-sm text-gray-500 bg-gray-50 p-3 rounded-md border border-gray-100;
+}

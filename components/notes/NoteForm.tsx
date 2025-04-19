@@ -163,11 +163,10 @@ export default function NoteForm({
         <div className="form-error">
           <div className="flex">
             <div className="flex-shrink-0">
-              <XCircleIcon 
-                className="text-red-400" 
-                style={{ width: '20px', height: '20px' }} 
-                aria-hidden="true" 
-              />
+          <XCircleIcon 
+            className="text-red-400 w-5 h-5" 
+            aria-hidden="true" 
+          />
             </div>
             <div className="ml-3">
               <p className="text-sm text-red-700">{error}</p>
@@ -243,8 +242,7 @@ Write your notes using **markdown** formatting..."
             onChange={handleContentChange}
           />
           <div 
-            className="absolute bottom-2 right-2 text-xs text-gray-500 italic" 
-            style={{ visibility: saveStatus === 'idle' ? 'hidden' : 'visible' }}
+            className={`absolute bottom-2 right-2 text-xs text-gray-500 italic ${saveStatus === 'idle' ? 'invisible' : 'visible'}`}
           >
             {saveStatus === 'saving' ? 'Auto-saving...' : 
              saveStatus === 'saved' ? 'Changes saved' : 

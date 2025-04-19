@@ -1,0 +1,32 @@
+/**
+ * Typography Components
+ */
+
+.page-title {
+  @apply text-2xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2 border-gray-200 dark:border-gray-700;
+}
+
+.section-title {
+  @apply text-xl font-semibold text-gray-800 dark:text-white mb-4;
+}
+
+.hero-title {
+  @apply text-4xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-600;
+}
+
+.hero-subtitle {
+  @apply text-xl text-gray-600 dark:text-gray-300 max-w-2xl;
+}
+
+/* Tag Components */
+.tag-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-opacity duration-200 hover:opacity-80;
+}
+
+.tag-container {
+  @apply mt-4 flex flex-wrap gap-1.5;
+}
+
+.category-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-50 text-primary-700 border border-primary-200;
+}

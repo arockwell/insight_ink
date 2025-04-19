@@ -1,0 +1,23 @@
+/**
+ * Layout Components
+ */
+
+.container-app {
+  @apply flex min-h-screen relative;
+}
+
+.content-area {
+  @apply flex flex-col md:pl-64 flex-1 w-full;
+}
+
+.main-content {
+  @apply flex-1 p-6;
+}
+
+.content-container {
+  @apply max-w-6xl mx-auto;
+}
+
+.page-footer {
+  @apply py-4 px-6 text-center text-sm text-gray-500;
+}
