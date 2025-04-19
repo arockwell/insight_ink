@@ -1,22 +1,11 @@
-/* Aggressively hide all blue SVGs and large SVGs that could be the problematic icon */
-svg:not([class]),
+/* Only hide specific problematic SVGs, allow HeroIcons to display */
+svg:not([class]):not([aria-hidden="true"]),
 svg[fill="blue"],
 svg[fill="#0000ff"],
 svg[stroke="blue"], 
 svg[stroke="#0000ff"],
-svg[color="blue"],
-svg[color="#0000ff"],
-svg path[fill="blue"],
-svg path[fill="#0000ff"],
-svg:not([class]) path,
 svg[width="100%"],
-svg[height="100%"],
-svg[width^="5"],
-svg[height^="5"],
-svg[width^="4"],
-svg[height^="4"],
-svg[width^="3"],
-svg[height^="3"] {
+svg[height="100%"] {
   display: none !important;
   visibility: hidden !important;
   opacity: 0 !important;
@@ -27,8 +16,18 @@ svg[height^="3"] {
   height: 0 !important;
 }
 
-/* Target any SVG inside the main content area specifically */
-.main-content-wrapper svg:not(.heroicons-react-component) {
+/* Allow HeroIcons to display normally */
+svg[aria-hidden="true"] {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  z-index: auto !important;
+  pointer-events: auto !important;
+}
+
+/* Target any SVG inside the main content area specifically, but allow HeroIcons */
+.main-content-wrapper svg:not([aria-hidden="true"]) {
   display: none !important;
 }
 
