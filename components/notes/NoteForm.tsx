@@ -163,10 +163,10 @@ export default function NoteForm({
         <div className="form-error">
           <div className="flex">
             <div className="flex-shrink-0">
-          <XCircleIcon 
-            className="text-red-400 w-5 h-5" 
-            aria-hidden="true" 
-          />
+              <XCircleIcon 
+                className="text-red-400 w-5 h-5" 
+                aria-hidden="true" 
+              />
             </div>
             <div className="ml-3">
               <p className="text-sm text-red-700">{error}</p>
