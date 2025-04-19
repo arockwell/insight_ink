@@ -19,6 +19,9 @@ model Note {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   
+  userId    Int?     @map("user_id")
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
   noteTags  NoteTag[]
   versions  NoteVersion[]
   
@@ -66,12 +69,16 @@ model NoteVersion {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String?
-  email     String   @unique
-  password  String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id           Int      @id @default(autoincrement())
+  name         String?
+  email        String   @unique
+  password     String
+  image        String?
+  apiKey       String?  @unique @map("api_key")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  
+  notes        Note[]
   
   @@map("users")
 }
